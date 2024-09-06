@@ -16,6 +16,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 
 @Controller('tags')
+@UseGuards(AuthGuard)
 export class TagsController {
   constructor(
     private readonly _tagsService: TagsService,
@@ -23,7 +24,6 @@ export class TagsController {
   ) {}
 
   @Get()
-  @UseGuards(AuthGuard)
   getAllTags() {
     return this._tagsService.getAllTags();
   }
