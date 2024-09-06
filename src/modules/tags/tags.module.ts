@@ -3,7 +3,7 @@ import { TagsService } from './tags.service';
 import { TagsController } from './tags.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Tag, TagSchema } from 'src/core/schemas/tags.schema';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -12,7 +12,7 @@ import { JwtModule } from '@nestjs/jwt';
       secret: 'Allahakbar'
     })
   ],
-  providers: [TagsService],
+  providers: [TagsService, JwtService],
   controllers: [TagsController]
 })
 export class TagsModule {}

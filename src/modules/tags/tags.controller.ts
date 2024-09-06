@@ -1,3 +1,4 @@
+import { AuthGuard } from 'src/core/guards/auth.guard';
 import { TagsDto } from './DTO/tags.dto';
 import { TagsService } from './tags.service';
 import {
@@ -9,7 +10,8 @@ import {
   Request,
   Post,
   Put,
-  UnauthorizedException
+  UnauthorizedException,
+  UseGuards
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
@@ -21,6 +23,7 @@ export class TagsController {
   ) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   getAllTags() {
     return this._tagsService.getAllTags();
   }
@@ -31,9 +34,10 @@ export class TagsController {
   }
 
   @Post()
-  addTag(@Body() newTag: TagsDto, @Request() req: any) {
-    const userId = this.verifyToken(req);
-    return this._tagsService.addTag(newTag, userId);
+  addTag(@Body() body: TagsDto, @Request() req: any) {
+    // const userId = this.verifyToken(req);
+    body.userId = req['userId'];
+    return this._tagsService.addTag(body);
   }
 
   @Delete(':id')

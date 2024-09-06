@@ -19,7 +19,7 @@ export class SigninService {
       (await bcrypt.compare(body.password, targetUser.password))
     ) {
       const token = this.jwtService.sign(
-        { name: targetUser.name, email: targetUser.email },
+        { name: targetUser.name, email: targetUser.email, id: targetUser._id },
         { secret: 'Allahakbar' }
       );
       return { message: 'welcome', token: token };
